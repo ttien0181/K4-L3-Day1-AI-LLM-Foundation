@@ -15,11 +15,11 @@ Gọi `call_openai` với temperature 0.0, 0.5, 1.0 và 1.5 dùng prompt
 **"Hãy kể cho tôi một sự thật thú vị về Việt Nam."**
 
 **Bạn nhận thấy quy luật gì qua bốn phản hồi?** (2–3 câu)
-> Temperature 0.0 cho phản hồi xác định, gần như điên cố answer. 0.5 cân bằng, có độ đa dạng nhẹ. 1.0 bắt đầu có ngữ điệu linh hoạt, dùng ví dụ phong phú hơn. 1.5 rất ngẫu nhiên, có thể trả lời không liên quan, lời văn điên rồ. Quy luật:越高 temperature → càng nhiều ngẫu nhiên và sáng tạo, nhưng giảm độ tin cậy.
+> Temperature 0.0 cho kết quả xác định, gần như điên cố. 0.5 cân bằng, có độ đa dạng nhẹ. 1.0 bắt đầu linh hoạt, dùng ví dụ phong phú hơn. 1.5 rất ngẫu nhiên, có thể trả lời không liên quan. Quy luật: càng cao temperature → càng sáng tạo nhưng giảm độ tin cậy.
 
 ### Câu 1.2 — Chọn temperature cho sản phẩm
 **Bạn sẽ đặt temperature bao nhiêu cho chatbot hỗ trợ khách hàng, và tại sao?**
-> Đặt temperature khoảng 0.3–0.5. Chatbot hỗ trợ khách hàng cần trả lời chính xác, nhất quán, không được bốc đồng. Temperature quá cao (≥0.7) sẽ gây ra trả lời không ổn định, sai thông tin, ảnh hưởng uy tín thương hiệu. 0.3–0.5 giữ được độ tin cậy nhưng vẫn có ngữ điệu tự nhiên, không khô cứng.
+> Đặt temperature 0.3–0.5. Chatbot hỗ trợ khách hàng cần trả lời chính xác, nhất quán. Temperature ≥0.7 gây trả lời không ổn định, sai thông tin. 0.3–0.5 giữ độ tin cậy mà vẫn tự nhiên.
 
 ### Câu 1.3 — Đánh đổi chi phí
 Kịch bản: 10.000 người dùng hoạt động mỗi ngày, mỗi người gọi API 3 lần,
@@ -27,9 +27,7 @@ mỗi lần trung bình ~350 token đầu ra.
 
 **Ước tính GPT-4o đắt hơn GPT-4o-mini bao nhiêu lần cho workload này? Nêu một
 trường hợp GPT-4o xứng đáng với chi phí và một trường hợp nên dùng mini:**
-> 10.000 người × 3 lần = 30.000 lần, mỗi lần ~350 token output. GPT-4o chi phí output $0.010/1K token → khoảng $105/ngày. GPT-4o-mini $0.0006/1K token → khoảng $6.30/ngày. GPT-4o đắt hơn khoảng 16.7 lần.
-
-Dùng GPT-4o khi cần lập luận phức tạp, hiểu sâu, ví dụ chẩn đoán y tế, phân tích pháp lý, viết code chuyên sâu. Dùng mini cho các tác vụ đơn giản: tóm tắt ngắn, phân loại nội dung, trả lời FAQ thường lệ — đủ tốt mà tiết kiệm hơn rất nhiều.
+> 30.000 lần × ~350 token output. GPT-4o: ~$105/ngày. GPT-4o-mini: ~$6.30/ngày. GPT-4o đắt hơn khoảng 16.7 lần. Dùng GPT-4o khi cần lập luận phức tạp (chẩn đoán, pháp lý, code chuyên sâu). Dùng mini cho tác vụ đơn giản (tóm tắt, phân loại, FAQ).
 
 ---
 
@@ -43,7 +41,7 @@ Gọi `chat_with_system_prompt` hai lần với cùng câu hỏi
 
 **Hai phản hồi khác nhau như thế nào (độ dài, từ vựng, ví dụ)? System prompt
 ảnh hưởng đến hành vi model ra sao?** (3–4 câu)
-> Với giáo viên tiểu học: câu trả lời ngắn, dùng từ đơn giản, có ví dụ cụ thể, dễ hiểu — ví dụ giải thích blockchain bằng "hộp tiền điện tử cho các bạn nhỏ". Với chuyên gia tài chính: câu trả lời dài, dùng thuật ngữ kỹ thuật như smart contract, hash, consensus, decentralization, không cần giải thích thêm. System prompt là "bộ định hướng" — nó thiết lập vai trò, phong cách, mức độ chi tiết, và từ vựng mà model phải tuân thủ throughout toàn bộ phản hồi. Thay đổi system prompt mà không đổi câu hỏi — kết quả có thể khác biệt hoàn toàn về chất lượng và đối tượng hướng đến.
+> Giáo viên tiểu học: câu trả lời ngắn, từ đơn giản, ví dụ cụ thể —ví dụ giải thích blockchain bằng "hộp tiền điện tử cho các bạn nhỏ". Chuyên gia tài chính: câu dài, thuật ngữ kỹ thuật như smart contract, hash, consensus. System prompt thiết lập vai trò, phong cách, mức độ chi tiết và từ vựng — thay đổi nó mà không đổi câu hỏi có thể thay đổi hoàn toàn kết quả.
 
 ### Câu 2.2 — tiktoken vs đếm từ
 Chọn một đoạn văn tiếng Việt ~100 từ. So sánh số token theo `count_tokens`
@@ -51,7 +49,7 @@ Chọn một đoạn văn tiếng Việt ~100 từ. So sánh số token theo `co
 
 **Hai con số chênh nhau bao nhiêu phần trăm? Vì sao tiếng Việt thường tốn
 nhiều token hơn tiếng Anh cùng độ dài?**
-> Với một đoạn ~100 từ tiếng Việt, tiktoken thường cho kết quả cao hơn ước lượng `số từ / 0.75` khoảng 15–30%. Lý do: tiếng Việt có dấu thanh (huyền, sắc, nặng, hỏi, ngã, bằng) và các ký tự đặc biệt (ă, â, ê, ô, ư, ơ). Tiktoken là tokenizer của OpenAI được train chủ yếu trên tiếng Anh, nên nó không có token riêng cho các ký tự này — chúng bị tách thành nhiều token nhỏ hơn. Tiếng Anh dùng alphabet 26 chữ cái, mỗi chữ thường là 1 token; tiếng Việt có tới 29 chữ + dấu, làm tăng density token. Đây là một quyết định sản phẩm thực tế: người dùng Việt Nam sẽ tốn nhiều token hơn người dùng Anh cùng độ dài câu.
+> Chênh khoảng 15–30%. Tiếng Việt có dấu thanh (huyền, sắc, nặng, hỏi, ngã, bằng) và ký tự đặc biệt (ă, â, ê, ô, ư, ơ). Tiktoken chủ yếu được train trên tiếng Anh nên không có token riêng cho các ký tự này — chúng bị tách thành nhiều token nhỏ. Tiếng Anh chỉ 26 chữ cái, mỗi chữ là 1 token; tiếng Việt có 29 chữ + dấu, làm tăng số token. Người dùng Việt Nam tốn nhiều token hơn người dùng Anh cùng độ dài câu.
 
 ---
 
@@ -60,7 +58,7 @@ nhiều token hơn tiếng Anh cùng độ dài?**
 ### Câu 3.1 — Trải nghiệm người dùng với streaming
 **Streaming quan trọng nhất trong trường hợp nào, và khi nào thì
 non-streaming lại phù hợp hơn?** (1 đoạn văn)
-> Streaming quan trọng nhất khi người dùng đang chờ phản hồi tức thì — ví dụ chatbot hỗ trợ khách hàng, agent hỗ trợ kỹ thuật, hoặc khi câu trả lời dài (giải thích bài học, viết code nhiều dòng). Việc in từng chunk giúp người dùng cảm thấy "phản hồi nhanh", giảm cảm giác chờ đợi. Non-streaming phù hợp khi cần tính toán chính xác trước khi trả kết quả: ví dụ batch processing, phân tích dữ liệu, hoặc khi response dùng để kiểm tra (test assertion) — phải chờ toàn bộ response mới có thể so sánh. Streaming không làm model chạy nhanh hơn; tổng thời gian gần như không đổi, chỉ thay đổi thời điểm ký tự đầu tiên xuất hiện.
+> Streaming quan trọng khi người dùng chờ phản hồi tức thì — chatbot hỗ trợ, agent kỹ thuật, hoặc câu trả lời dài. In từng chunk giúp người dùng cảm thấy "phản hồi nhanh", giảm chờ đợi. Non-streaming phù hợp khi cần kết quả chính xác trước khi dùng: batch processing, phân tích dữ liệu, hoặc response dùng để kiểm tra. Streaming không làm model nhanh hơn; tổng thời gian gần như không đổi, chỉ thay đổi thời điểm ký tự đầu tiên xuất hiện.
 
 ### Câu 3.2 — Vì sao backoff theo cấp số nhân?
 **So với delay cố định (ví dụ luôn chờ 1 giây), exponential backoff có lợi

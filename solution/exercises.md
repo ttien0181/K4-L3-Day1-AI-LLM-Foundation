@@ -15,11 +15,11 @@ Gọi `call_openai` với temperature 0.0, 0.5, 1.0 và 1.5 dùng prompt
 **"Hãy kể cho tôi một sự thật thú vị về Việt Nam."**
 
 **Bạn nhận thấy quy luật gì qua bốn phản hồi?** (2–3 câu)
-> Temperature 0.0 cho phản hồi xác định, gần như điên cố answer. 0.5 cân bằng, có độ đa dạng nhẹ. 1.0 bắt đầu có ngữ điệu linh hoạt, dùng ví dụ phong phú hơn. 1.5 rất ngẫu nhiên, có thể trả lời không liên quan, lời văn điên rồ. Quy luật:越高 temperature → càng nhiều ngẫu nhiên và sáng tạo, nhưng giảm độ tin cậy.
+> Temperature 0.0 cho kết quả xác định, gần như điên cố. 0.5 cân bằng, có độ đa dạng nhẹ. 1.0 bắt đầu linh hoạt, dùng ví dụ phong phú hơn. 1.5 rất ngẫu nhiên, có thể trả lời không liên quan. Quy luật: càng cao temperature → càng sáng tạo nhưng giảm độ tin cậy.
 
 ### Câu 1.2 — Chọn temperature cho sản phẩm
 **Bạn sẽ đặt temperature bao nhiêu cho chatbot hỗ trợ khách hàng, và tại sao?**
-> Đặt temperature khoảng 0.3–0.5. Chatbot hỗ trợ khách hàng cần trả lời chính xác, nhất quán, không được bốc đồng. Temperature quá cao (≥0.7) sẽ gây ra trả lời không ổn định, sai thông tin, ảnh hưởng uy tín thương hiệu. 0.3–0.5 giữ được độ tin cậy nhưng vẫn có ngữ điệu tự nhiên, không khô cứng.
+> Đặt temperature 0.3–0.5. Chatbot hỗ trợ khách hàng cần trả lời chính xác, nhất quán. Temperature ≥0.7 gây trả lời không ổn định, sai thông tin. 0.3–0.5 giữ độ tin cậy mà vẫn tự nhiên.
 
 ### Câu 1.3 — Đánh đổi chi phí
 Kịch bản: 10.000 người dùng hoạt động mỗi ngày, mỗi người gọi API 3 lần,
@@ -27,9 +27,7 @@ mỗi lần trung bình ~350 token đầu ra.
 
 **Ước tính GPT-4o đắt hơn GPT-4o-mini bao nhiêu lần cho workload này? Nêu một
 trường hợp GPT-4o xứng đáng với chi phí và một trường hợp nên dùng mini:**
-> 10.000 người × 3 lần = 30.000 lần, mỗi lần ~350 token output. GPT-4o chi phí output $0.010/1K token → khoảng $105/ngày. GPT-4o-mini $0.0006/1K token → khoảng $6.30/ngày. GPT-4o đắt hơn khoảng 16.7 lần.
-
-Dùng GPT-4o khi cần lập luận phức tạp, hiểu sâu, ví dụ chẩn đoán y tế, phân tích pháp lý, viết code chuyên sâu. Dùng mini cho các tác vụ đơn giản: tóm tắt ngắn, phân loại nội dung, trả lời FAQ thường lệ — đủ tốt mà tiết kiệm hơn rất nhiều.
+> 30.000 lần × ~350 token output. GPT-4o: ~$105/ngày. GPT-4o-mini: ~$6.30/ngày. GPT-4o đắt hơn khoảng 16.7 lần. Dùng GPT-4o khi cần lập luận phức tạp (chẩn đoán, pháp lý, code chuyên sâu). Dùng mini cho tác vụ đơn giản (tóm tắt, phân loại, FAQ).
 
 ---
 
